@@ -28,7 +28,10 @@
   (users [this limit])
   (users-new [this limit])
   (users-popular [this limit])
-  (listing [this names]))
+  (listing [this names])
+  (upvote [this thing])
+  (downvote [this thing])
+  (unvote [this thing]))
 
 (defrecord CredditClient [credentials]
   RedditApi
@@ -58,7 +61,10 @@
   (users [this limit] (client/users credentials limit))
   (users-new [this limit] (client/users-new credentials limit))
   (users-popular [this limit] (client/users-popular credentials limit))
-  (listing [this names] (client/listing credentials names)))
+  (listing [this names] (client/listing credentials names))
+  (upvote [this thing] (client/upvote credentials thing))
+  (downvote [this thing] (client/downvote credentials thing))
+  (unvote [this thing] (client/downvote credentials thing)))
 
 (defn init
   [credentials]
