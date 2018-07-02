@@ -31,7 +31,8 @@
   (listing [this names])
   (upvote [this thing])
   (downvote [this thing])
-  (unvote [this thing]))
+  (unvote [this thing])
+  (post-comment [this thing body]))
 
 (defrecord CredditClient [credentials]
   RedditApi
@@ -64,7 +65,8 @@
   (listing [this names] (client/listing credentials names))
   (upvote [this thing] (client/upvote credentials thing))
   (downvote [this thing] (client/downvote credentials thing))
-  (unvote [this thing] (client/downvote credentials thing)))
+  (unvote [this thing] (client/downvote credentials thing))
+  (post-comment [this thing body] (client/post-comment credentisl thing body)))
 
 (defn init
   [credentials]
