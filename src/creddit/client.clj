@@ -64,14 +64,15 @@
   [credentials url body]
   (try+
     (-> (client/post url
-                     {:basic-auth [(:user-client credentials) (:user-secret credentials)]
-                      :headers {"User-Agent" "creddit"}
-                      :body body
-                      :content-type :json
-                      :socket-timeout 10000
-                      :conn-timeout 10000
-                      :accept :json
-                      :as :json})
+                     (merge
+                       {:basic-auth [(:user-client credentials) (:user-secret credentials)]
+                        :headers {"User-Agent" "creddit"}
+                        :content-type :json
+                        :socket-timeout 10000
+                        :conn-timeout 10000
+                        :accept :json
+                        :as :json}
+                      body))
         (get :body))
     (catch [:status 401] {}
       (throw
