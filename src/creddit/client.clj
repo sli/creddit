@@ -251,3 +251,7 @@
   [credentials thing]
   (-> (http-post credentials (str "https://www.reddit.com/api/vote") {:dir 0 :id thing})
       (parse-response)))
+
+(defn post-comment
+  [credentials thing body]
+  (-> (http-post credentials (str "https://www.reddit.com/api/comment" {:api_type "json" :text body :thing_id thing}))))
