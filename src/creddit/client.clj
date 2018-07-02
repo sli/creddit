@@ -71,7 +71,7 @@
                       :socket-timeout 10000
                       :conn-timeout 10000
                       :accept :json
-                      :as json})
+                      :as :json})
         (get :body))
     (catch [:status 401] {}
       (throw
