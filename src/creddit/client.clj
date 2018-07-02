@@ -60,6 +60,24 @@
                    :as :json})
       (get :body)))
 
+(defn http-post
+  [credentials url body]
+  (try+
+    (-> (client/post url
+                     {:basic-auth [(:user-client credentials) (:user-secret credentials)]
+                      :headers {"User-Agent" "creddit"}
+                      :body body
+                      :content-type :json
+                      :socket-timeout 10000
+                      :conn-timeout 10000
+                      :accept :json
+                      :as json})
+        (get :body))
+    (catch [:status 401] {}
+      (throw
+        (ex-info "Unauthorised, please check your credentials are correct."
+                 {:causes :unauthorised})))))
+
 (defn frontpage
   [credentials limit time]
   (if (and (valid-limit? limit) (valid-time? time))
@@ -216,4 +234,19 @@
 (defn listing
   [credentials names]
   (-> (http-get credentials (str "https://www.reddit.com/by_id/" (string/join "," names) "/.json"))
+      (parse-response)))
+
+(defn upvote
+  [thing]
+  (-> (http-post credentials (str "https://www.reddit.com/api/vote") {:dir 1 :id thing})
+      (parse-response)))
+
+(defn downvote
+  [thing]
+  (-> (http-post credentials (str "https://www.reddit.com/api/vote") {:dir -1 :id thing})
+      (parse-response)))
+
+(defn unvote
+  [thing]
+  (-> (http-post credentials (str "https://www.reddit.com/api/vote") {:dir 0 :id thing})
       (parse-response)))
