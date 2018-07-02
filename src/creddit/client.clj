@@ -79,7 +79,7 @@
         (ex-info "Unauthorised, please check your credentials are correct."
                  {:causes :unauthorised})))))
 
-(def me
+(defn me
   [credentials]
   (-> (http-get credentials "https://www.reddit.com/api/me.json")
       (parse-response)))
