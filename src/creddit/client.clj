@@ -237,16 +237,16 @@
       (parse-response)))
 
 (defn upvote
-  [thing]
+  [credentials thing]
   (-> (http-post credentials (str "https://www.reddit.com/api/vote") {:dir 1 :id thing})
       (parse-response)))
 
 (defn downvote
-  [thing]
+  [credentials thing]
   (-> (http-post credentials (str "https://www.reddit.com/api/vote") {:dir -1 :id thing})
       (parse-response)))
 
 (defn unvote
-  [thing]
+  [credentials thing]
   (-> (http-post credentials (str "https://www.reddit.com/api/vote") {:dir 0 :id thing})
       (parse-response)))
