@@ -79,6 +79,11 @@
         (ex-info "Unauthorised, please check your credentials are correct."
                  {:causes :unauthorised})))))
 
+(def me
+  [credentials]
+  (-> (http-get credentials "https://www.reddit.com/api/me.json")
+      (parse-response)))
+
 (defn frontpage
   [credentials limit time]
   (if (and (valid-limit? limit) (valid-time? time))

@@ -2,6 +2,7 @@
   (:require [creddit.client :as client]))
 
 (defprotocol RedditApi
+  (me [this])
   (frontpage [this limit time])
   (controversial [this limit time])
   (new [this limit time])
@@ -36,6 +37,7 @@
 
 (defrecord CredditClient [credentials]
   RedditApi
+  (me [this] (client/me credentials))
   (frontpage [this limit time] (client/frontpage credentials limit time))
   (controversial [this limit time] (client/controversial credentials limit time))
   (new [this limit time] (client/new credentials limit time))
