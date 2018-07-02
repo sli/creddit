@@ -66,7 +66,7 @@
   (upvote [this thing] (client/upvote credentials thing))
   (downvote [this thing] (client/downvote credentials thing))
   (unvote [this thing] (client/downvote credentials thing))
-  (post-comment [this thing body] (client/post-comment credentisl thing body)))
+  (post-comment [this thing body] (client/post-comment credentials thing body)))
 
 (defn init
   [credentials]
